@@ -1,0 +1,79 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:LightingProgrammatorAvalonia.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:ui="using:FluentAvalonia.UI.Controls"
+        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="550"
+        x:Class="LightingProgrammatorAvalonia.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="LightingProgrammatorAvalonia">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <!--<TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" MinHeight="112"/>
+			<RowDefinition Height="4"/>
+			<RowDefinition Height="*" MinHeight="64"/>
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0" RowDefinitions="48, *">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" MinWidth="78" />
+				<ColumnDefinition Width="4" />
+				<ColumnDefinition Width="*" MinWidth="64" />
+			</Grid.ColumnDefinitions>
+
+
+			<DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="8 0 8 0">
+				<Button Content="Open..." DockPanel.Dock="Left" VerticalAlignment="Center"/>
+				<TextBlock Text="Song ID" DockPanel.Dock="Left" Margin="6 0 0 0" VerticalAlignment="Center"/>
+				<TextBox Text="{Binding CurrentSong}" IsReadOnly="True" Width="196" DockPanel.Dock="Left" Margin="6 0 0 0" VerticalAlignment="Center"/>
+				<Button Content="Save Config" DockPanel.Dock="Left" Margin="6 0 0 0" VerticalAlignment="Center"/>
+
+				<Button Content="Connect to OBS" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+			</DockPanel>
+
+			<ScrollViewer Grid.Row="1" Grid.Column="0" >
+				<ItemsRepeater Name="ColorEffectsToolbox" Margin="8 0 8 0" ItemsSource="{Binding Effects}"  >
+					<ItemsRepeater.Layout>
+						<WrapLayout HorizontalSpacing="4" VerticalSpacing="4" Orientation="Horizontal"/>
+					</ItemsRepeater.Layout>
+					<ItemsRepeater.ItemTemplate>
+						<DataTemplate>
+							<Panel>
+								<Border Width="80" CornerRadius="6" ClipToBounds="True">
+									<Image Source="{Binding	Icon}" />
+								</Border>
+								<Button Name="{Binding Name, StringFormat='ColorEffectPicker{0}'}" Width="82" Height="82" ClipToBounds="True" Content="{Binding Name}" Background="Transparent" />
+
+							</Panel>
+						</DataTemplate>
+					</ItemsRepeater.ItemTemplate>
+				</ItemsRepeater>
+			</ScrollViewer>
+			<GridSplitter Grid.Row="1" Grid.Column="1" ResizeDirection="Columns"/>
+			<Button Grid.Row="1" Grid.Column="2" Content="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+		</Grid>
+		<GridSplitter Grid.Row="1" ResizeDirection="Rows"/>
+		<Grid Grid.Row="2" RowDefinitions="48, *">
+			<DockPanel Grid.Row="0" Margin="8 0 8 0">
+				<Button Height="32" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Center">
+				<ui:SymbolIcon Symbol="PlayFilled"></ui:SymbolIcon>
+				</Button>
+				<Button Height="32" DockPanel.Dock="Left" Margin="6 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center">
+						<ui:SymbolIcon Symbol="StopFilled"></ui:SymbolIcon>
+				</Button>
+				<Slider Width="128" Minimum="0" Maximum="100" Value="75" DockPanel.Dock="Left" Margin="6 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+			</DockPanel>
+			<Button Grid.Row="1" Content="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		</Grid>
+	</Grid>
+</Window>
